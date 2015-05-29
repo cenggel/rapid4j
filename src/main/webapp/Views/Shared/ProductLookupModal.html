@@ -1,0 +1,78 @@
+﻿<script type="text/ng-template" id="myModalContent.html">
+
+    <div ng-controller="productLookupModalController" ng-init="initializeController()">
+
+        <div class="modal-header">
+            <h3 class="modal-title">Product Inquiry</h3>
+        </div>
+        <div class="modal-body">           
+
+            <table class="table" style="width:100%">
+                <tr>
+                    <td class="input-label-bottom" align="right" style="width:20%"><label>Product Code:</label></td>
+                    <td class="input-box-bottom" style="width:20%">
+
+                        <!--<input ng-model="$parent.ProductCode" type="text" style="width: 100px" />-->
+                        <input type="text" ng-model="ProductCode" typeahead="product for products in getProductsTypeAheadProductCode($viewValue)">
+
+
+                    </td>
+                    <td class="input-label-bottom" align="right" style="width:20%"><label>Product Name:</label></td>
+                    <td class="input-box-bottom" style="width:20%">
+                        <!--<input ng-model="$parent.ProductDescription" type=" text" style="width: 300px" />-->
+                        <input type="text" ng-model="Description" typeahead="product for products in getProductsTypeAheadDescription($viewValue)">
+
+                    </td>
+                    <td class="input-label-bottom" style="width:20%">                       
+                        <button class="btn btn-primary btn-large" ng-click="resetSearchFields()">Reset</button>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table-striped table-hover" style="width: 100%;">
+                <thead>
+
+                    <tr>
+                        <th colspan="2" style="width: 50%">
+                            <span ng-bind="TotalProducts"></span>&nbsp;Products
+                        </th>
+                        <th colspan="5" style="text-align: right; width: 50%">
+                            Page&nbsp;<span ng-bind="CurrentPageNumber"></span>&nbsp;of&nbsp;
+                            <span ng-bind="TotalPages"></span>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th ng:repeat="tableHeader in tableHeaders" ng:class="setSortIndicator(tableHeader.label)" ng:click="changeSorting(tableHeader.label)">{{tableHeader.label}}</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in products">
+                        <td style="width: 25%; height: 25px"><a ng-click="ok(product.ProductID)" style=" cursor pointer; text-decoration underline; color black">{{product.ProductCode}}</a></td>
+                        <td style="width: 50%; white-space: nowrap"><div ng-bind="product.Description"></div></td>
+                        <td style="width: 25%; text-align:left; white-space: nowrap"><div>{{product.UnitPrice | currency}}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <pagination boundary-links="true" total-items="TotalProducts" items-per-page="PageSize" ng-change="pageChanged()" ng-model="CurrentPageNumber" class="pagination-lg" previous-text="Prev" next-text="Next" first-text="First" last-text="Last"></pagination>
+
+            <div style="padding-top:20px">
+                <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>          
+        </div>
+
+
+
+
+        </div>
+
+</script>

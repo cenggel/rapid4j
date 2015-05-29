@@ -1,0 +1,78 @@
+﻿
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+
+    <script data-main="main.js" src="scripts/require.js"></script>      
+    <link href="Content/angular-block-ui.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/Application.css" rel="stylesheet" />
+    <link href="Content/SortableGrid.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="indexController" ng-init="initializeController()" style="height:100%;">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" ng-repeat="menuItem in MenuItems | filter:{module: 'Main'}">
+                    <li><a href="{{menuItem.route}}">{{menuItem.description}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+   
+    <script language="JavaScript">
+
+        function set95PercentWidth() {            
+            var viewPort = document.getElementById("ViewPort");
+            viewPort.style.width = "95%";
+        }
+
+        function set80PercentWidth() {
+          
+            var viewPort = document.getElementById("ViewPort");
+            viewPort.style.width = "80%";
+        }
+
+    </script>
+
+    <div style="width: 100%; height: 100%; position: absolute; vertical-align: top; margin: 50px 0px 0px 0px">
+   
+        <button class="btn btn-default" style="width: 200px; background-color: antiquewhite; border:none;" ng-show="isCollapsed" onclick="set80PercentWidth()" ng-click="isCollapsed = !isCollapsed">Show Menu>></button>
+        <button class="btn btn-default" style="width: 200px; background-color: antiquewhite; border:none;" ng-show="!isCollapsed" onclick="set95PercentWidth()" ng-click="isCollapsed = !isCollapsed;"><< Hide Menu</button>
+        
+        <div style="width:100%">
+
+            <div collapse="isCollapsed" class="navbar" style="width: 200px; height:100%; vertical-align:top; margin-top:0px; margin-right:20px;background-color: antiquewhite; float:left">
+                <div style="height:1000px">
+                    <table class="table table-hover">
+                    	<tr>{{applicationModule}}</tr>
+                        <tr ng-repeat="menuItem in MenuItems | filter:{module: applicationModule}">
+                            <td><a href="{{menuItem.route}}">{{menuItem.description}}</a></td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div id="ViewPort" style="vertical-align: top; float: left; width:80%; margin: 0px 40px 40px 40px" ng-view>             
+               <!-- <div style="margin: 0px 40px 40px 40px; background-color:red; float:left; display: inline-block;" ng-view></div>-->
+            </div>
+
+        </div>
+     
+
+    </div>
+
+    <script language="JavaScript">
+
+        function init() {       
+        }
+    </script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,17 @@
+﻿
+
+<h3> Customer Inquiry </h3>
+
+<div ng-controller="customerInquiryController" ng-init="initializeController('#Customers/CustomerMaintenance/', 'Customers')">
+
+    <div ng-include="'/Views/Shared/Customers.html'"></div>
+
+    <pagination boundary-links="true" total-items="TotalCustomers" items-per-page="PageSize" ng-change="pageChanged()" ng-model="CurrentPageNumber" class="pagination-lg" previous-text="Prev" next-text="Next" first-text="First" last-text="Last"></pagination>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+
+</div>
+

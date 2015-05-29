@@ -1,0 +1,59 @@
+﻿
+<h3> Order Inquiry </h3>
+
+<div ng-controller="orderInquiryController" ng-init="initializeController()">
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label-bottom" align="right" style="width:20%"><label>Customer Code:</label></td>
+            <td class="input-box-bottom" style="width:20%">
+                <input ng-model="CustomerCode" type="text" style="width: 100px" />
+            </td>
+            <td class="input-label-bottom" align="right" style="width:20%"><label>Company Name:</label></td>
+            <td class="input-box-bottom" style="width:20%">
+                <input ng-model="CompanyName" type="text" style="width: 300px" />
+            </td>
+            <td class="input-label-bottom" style="width:20%">
+                <button class="btn btn-primary btn-large" ng-click="searchCustomers()">Search</button>
+                <button class="btn btn-primary btn-large" ng-click="resetSearchFields()">Reset</button>
+            </td>
+        </tr>
+    </table>
+
+    <table class="table table-striped table-hover" style="width: 100%;">
+        <thead>
+
+            <tr>
+                <th colspan="2" style="width: 50%">
+                    <span ng-bind="TotalOrders"></span>&nbsp;Orders
+                </th>
+                <th colspan="5" style="text-align: right; width: 50%">
+                    Page&nbsp;<span ng-bind="CurrentPageNumber"></span>&nbsp;of&nbsp;
+                    <span ng-bind="TotalPages"></span>
+                </th>
+            </tr>
+
+            <tr>
+                <th ng:repeat="tableHeader in tableHeaders" ng:class="setSortIndicator(tableHeader.label)" ng:click="changeSorting(tableHeader.label)">{{tableHeader.label}}</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in orders">
+                <td style="width: 10%; height: 25px"><a ng-href="#Orders/OrderEntryHeader/{{order.Order.OrderID}}" style="cursor:pointer; text-decoration:underline; color:black">{{order.Order.OrderID}}</a></td>
+                <td style="width: 20%; white-space: nowrap"><div ng-bind="order.Customer.CustomerCode"></div></td>
+                <td style="width: 20%; white-space: nowrap"><div ng-bind="order.Customer.CompanyName"></div></td>
+                <td style="width: 20%; white-space: nowrap"><div>{{order.Order.OrderDate | date:'MM/dd/yyyy' }}</div></td>
+                <td style="width: 20%; white-space: nowrap"><div>{{order.Order.OrderTotal | currency }}</div></td>              
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination boundary-links="true" total-items="TotalOrders" items-per-page="PageSize" ng-change="pageChanged()" ng-model="CurrentPageNumber" class="pagination-lg" previous-text="Prev" next-text="Next" first-text="First" last-text="Last"></pagination>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>  
+
+</div>
+

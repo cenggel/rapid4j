@@ -1,0 +1,49 @@
+﻿
+<div ng-controller="productMaintenanceController" ng-init="initializeController()">
+
+    <h3> Product Maintenance </h3>
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label" align="right"><label class="required">Product Code:</label></td>
+            <td class="input-box">
+                <div ng-bind="ProductCode" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="ProductCode" type="text" style="width: 300px" ng-class="{'validation-error': ProductCodeInputError}" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">Product Description:</label></td>
+            <td class="input-box">
+                <div ng-bind="Description" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="Description" type="text" style="width: 300px" ng-class="{'validation-error': DescriptionInputError}" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Unit Price:</label></td>
+            <td class="input-box">
+                <div ng-show="DisplayMode">{{UnitPrice | currency}}</div>
+                <div ng-show="EditMode"><input ng-model="UnitPrice" type="text" style="width: 300px" ng-class="{'validation-error': UnitPriceInputError}" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label-bottom" align="right"><label>Unit of Measure:</label></td>
+            <td class="input-box-bottom">
+                <div ng-bind="UnitOfMeasure" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="UnitOfMeasure" type="text" style="width: 300px" ng-class="{'validation-error': UnitOfMeasureInputError}" /></div>
+            </td>
+        </tr>
+       
+    </table>
+
+    <span ng-show="ShowCreateButton"><button class="btn btn-primary btn-large" ng-click="createProduct()">Create</button></span>
+    <span ng-show="ShowEditButton"><button class="btn btn-primary btn-large" ng-click="editProduct()">Edit</button></span>
+    <span ng-show="ShowUpdateButton"><button class="btn btn-primary btn-large" ng-click="updateProduct()">Update</button></span>
+    <span ng-show="ShowCancelButton"><button class="btn btn-primary btn-large" ng-click="cancelChanges()">Cancel</button></span>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+</div>
+
+

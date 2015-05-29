@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.v5ent.rapid4j.web.dao.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.v5ent.rapid4j.web.model.Customer" >
+    <id column="customerid" property="customerid" jdbcType="VARCHAR" />
+    <result column="companyname" property="companyname" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="postalcode" property="postalcode" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="phonenumber" property="phonenumber" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="datecreated" property="datecreated" jdbcType="DATE" />
+    <result column="dateupdated" property="dateupdated" jdbcType="DATE" />
+    <result column="contactname" property="contactname" jdbcType="VARCHAR" />
+    <result column="contacttitle" property="contacttitle" jdbcType="VARCHAR" />
+    <result column="customercode" property="customercode" jdbcType="VARCHAR" />
+    <result column="websiteurl" property="websiteurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    customerid, companyname, address, city, region, postalcode, country, phonenumber, 
+    fax, datecreated, dateupdated, contactname, contacttitle, customercode, websiteurl
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.v5ent.rapid4j.web.model.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_customer
+    where customerid = #{customerid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_customer
+    where customerid = #{customerid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.v5ent.rapid4j.web.model.CustomerExample" >
+    delete from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.v5ent.rapid4j.web.model.Customer" >
+    insert into t_customer (customerid, companyname, address, 
+      city, region, postalcode, 
+      country, phonenumber, fax, 
+      datecreated, dateupdated, contactname, 
+      contacttitle, customercode, websiteurl
+      )
+    values (#{customerid,jdbcType=VARCHAR}, #{companyname,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{postalcode,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, 
+      #{datecreated,jdbcType=DATE}, #{dateupdated,jdbcType=DATE}, #{contactname,jdbcType=VARCHAR}, 
+      #{contacttitle,jdbcType=VARCHAR}, #{customercode,jdbcType=VARCHAR}, #{websiteurl,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.v5ent.rapid4j.web.model.Customer" >
+    insert into t_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        customerid,
+      </if>
+      <if test="companyname != null" >
+        companyname,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="postalcode != null" >
+        postalcode,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="phonenumber != null" >
+        phonenumber,
+      </if>
+      <if test="fax != null" >
+        fax,
+      </if>
+      <if test="datecreated != null" >
+        datecreated,
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated,
+      </if>
+      <if test="contactname != null" >
+        contactname,
+      </if>
+      <if test="contacttitle != null" >
+        contacttitle,
+      </if>
+      <if test="customercode != null" >
+        customercode,
+      </if>
+      <if test="websiteurl != null" >
+        websiteurl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="companyname != null" >
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null" >
+        #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="datecreated != null" >
+        #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="dateupdated != null" >
+        #{dateupdated,jdbcType=DATE},
+      </if>
+      <if test="contactname != null" >
+        #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttitle != null" >
+        #{contacttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="customercode != null" >
+        #{customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteurl != null" >
+        #{websiteurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.v5ent.rapid4j.web.model.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from t_customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_customer
+    <set >
+      <if test="record.customerid != null" >
+        customerid = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyname != null" >
+        companyname = #{record.companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null" >
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postalcode != null" >
+        postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonenumber != null" >
+        phonenumber = #{record.phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null" >
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datecreated != null" >
+        datecreated = #{record.datecreated,jdbcType=DATE},
+      </if>
+      <if test="record.dateupdated != null" >
+        dateupdated = #{record.dateupdated,jdbcType=DATE},
+      </if>
+      <if test="record.contactname != null" >
+        contactname = #{record.contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contacttitle != null" >
+        contacttitle = #{record.contacttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customercode != null" >
+        customercode = #{record.customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.websiteurl != null" >
+        websiteurl = #{record.websiteurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_customer
+    set customerid = #{record.customerid,jdbcType=VARCHAR},
+      companyname = #{record.companyname,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      postalcode = #{record.postalcode,jdbcType=VARCHAR},
+      country = #{record.country,jdbcType=VARCHAR},
+      phonenumber = #{record.phonenumber,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      datecreated = #{record.datecreated,jdbcType=DATE},
+      dateupdated = #{record.dateupdated,jdbcType=DATE},
+      contactname = #{record.contactname,jdbcType=VARCHAR},
+      contacttitle = #{record.contacttitle,jdbcType=VARCHAR},
+      customercode = #{record.customercode,jdbcType=VARCHAR},
+      websiteurl = #{record.websiteurl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.v5ent.rapid4j.web.model.Customer" >
+    update t_customer
+    <set >
+      <if test="companyname != null" >
+        companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="postalcode != null" >
+        postalcode = #{postalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null" >
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="datecreated != null" >
+        datecreated = #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated = #{dateupdated,jdbcType=DATE},
+      </if>
+      <if test="contactname != null" >
+        contactname = #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="contacttitle != null" >
+        contacttitle = #{contacttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="customercode != null" >
+        customercode = #{customercode,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteurl != null" >
+        websiteurl = #{websiteurl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where customerid = #{customerid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.v5ent.rapid4j.web.model.Customer" >
+    update t_customer
+    set companyname = #{companyname,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      postalcode = #{postalcode,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      phonenumber = #{phonenumber,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      datecreated = #{datecreated,jdbcType=DATE},
+      dateupdated = #{dateupdated,jdbcType=DATE},
+      contactname = #{contactname,jdbcType=VARCHAR},
+      contacttitle = #{contacttitle,jdbcType=VARCHAR},
+      customercode = #{customercode,jdbcType=VARCHAR},
+      websiteurl = #{websiteurl,jdbcType=VARCHAR}
+    where customerid = #{customerid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,224 @@
+﻿<div ng-controller="orderEntryHeaderController" ng-init="initializeController()" ng-cloak>
+
+    <h3> Order Entry </h3>
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label" align="right"><label>Order Number:</label></td>
+            <td class="input-box">
+                <div ng-bind="OrderID" ></div>
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td class="input-label" align="right"><label >Order Date:</label></td>
+            <td class="input-box">
+                <div>{{OrderDate | date:'MM/dd/yyyy'}}</div>              
+            </td>
+        </tr>
+
+        <tr>
+            <td class="input-label" align="right"><label class="required">Required Ship Date:</label></td>
+            <td class="input-box" style="height:50px">
+                <div ng-bind="RequiredDate" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode">      
+                    
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input ng-class="{'validation-error': RequiredDateInputError}" type="text" style="width:100px"
+                                       datepicker-popup="MM/dd/yyyy"
+                                       ng-model="RequiredDate"
+                                       is-open="opened"
+                                       datepicker-options="dateOptions"
+                                       date-disabled="disabled(date, mode)"
+                                       ng-required="true"
+                                       close-text="Close" />                            
+                                    <button type="button" ng-click="open($event)"><i style="height:10px" class="glyphicon glyphicon-calendar"></i></button>
+                               
+                            </p>
+
+                         
+
+                        </div>
+                    </div>
+                                                                                                                                                                                             
+               </div>
+            </td>
+
+        </tr>
+
+
+        <tr>
+
+            <td class="input-label-bottom" align="right"><label class="required">Ship Via:</label></td>
+            <td class="input-box-bottom">
+                <div ng-show="DisplayMode">{{selectedShipperName}}</div>
+                <div ng-show="EditMode">                
+                    <select style="width: 300px" ng-model="ShipVia" ng-options="shipper.ShipperName for shipper in Shippers" ng-class="{'validation-error': ShipViaInputError}">
+                        <option value="">-- select a shipper --</option>
+                    </select>                                
+               </div>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <table style="width:100%" >
+        <tr>
+
+            <td style="width: 49%; vertical-align: top">
+                <h4> <b>Bill-To Information</b> </h4>
+
+                <table class="table" style="width:100%">
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Customer Code:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="CustomerCode"></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Customer Name:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="CompanyName"></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Bill To Address:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="Address"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label>Bill To City:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="City"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label>Bill To Region:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="Region"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label>Bill To Postal Code:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="PostalCode"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label-bottom" align="right"><label>Bill To Country:</label></td>
+                        <td class="input-box-bottom" style="width:70%">
+                            <div ng-bind="CountryCode"></div>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+
+            <td style="width:2%">
+                &nbsp;
+            </td>
+
+            <td style="width:49%; vertical-align:top">
+
+                <h4> <b>Ship-To Information</b></h4>
+
+                <table class="table" style="width:100%">
+
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To Name:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipName" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipName" type="text" style="width: 300px" ng-class="{'validation-error': ShipNameInputError}" /></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To Address:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipAddress" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipAddress" type="text" style="width: 300px" ng-class="{'validation-error': ShipAddressInputError}" /></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To City:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipCity" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipCity" type="text" style="width: 300px" ng-class="{'validation-error': ShipCityInputError}" /></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To Region:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipRegion" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipRegion" type="text" style="width: 300px" ng-class="{'validation-error': ShipRegionInputError}" /></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To Postal Code:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipPostalCode" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipPostalCode" type="text" style="width: 300px" ng-class="{'validation-error': ShipPostalCodeInputError}" /></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="input-label" align="right"><label class="required">Ship To Country:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="ShipCountry" ng-show="DisplayMode"></div>
+                            <div ng-show="EditMode"><input ng-model="ShipCountry" type="text" style="width: 300px" ng-class="{'validation-error': ShipCountryInputError}" /></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="input-label-bottom" align="right"><label></label></td>
+                        <td class="input-box-bottom" style="width:70%">
+                            &nbsp;                            
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+   
+
+  
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label-bottom" align="right"><label>Order Total:</label></td>
+            <td class="input-box-bottom">
+                <div>{{OrderTotal | currency}}</div>
+            </td>           
+        </tr>     
+
+    </table>
+
+    <span ng-show="ShowCreateButton"><button class="btn btn-primary btn-large" ng-click="createOrder()">Create</button></span>
+    <span ng-show="ShowEditButton"><button class="btn btn-primary btn-large" ng-click="editOrder()">Edit</button></span>
+    <span ng-show="ShowUpdateButton"><button class="btn btn-primary btn-large" ng-click="updateOrder()">Update</button></span>
+    <span ng-show="ShowCancelButton"><button class="btn btn-primary btn-large" ng-click="cancelChanges()">Cancel</button></span>
+    <span ng-show="ShowDetailsButton"><button class="btn btn-primary btn-large" ng-click="orderDetails()">Order Details</button></span>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+</div>

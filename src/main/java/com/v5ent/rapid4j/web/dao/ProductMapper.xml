@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.v5ent.rapid4j.web.dao.ProductMapper" >
+  <resultMap id="BaseResultMap" type="com.v5ent.rapid4j.web.model.Product" >
+    <id column="productid" property="productid" jdbcType="VARCHAR" />
+    <result column="productname" property="productname" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="unitprice" property="unitprice" jdbcType="NUMERIC" />
+    <result column="unitofmeasure" property="unitofmeasure" jdbcType="VARCHAR" />
+    <result column="datecreated" property="datecreated" jdbcType="DATE" />
+    <result column="dateupdated" property="dateupdated" jdbcType="DATE" />
+    <result column="supplierid" property="supplierid" jdbcType="VARCHAR" />
+    <result column="categoryid" property="categoryid" jdbcType="VARCHAR" />
+    <result column="quantityperunit" property="quantityperunit" jdbcType="VARCHAR" />
+    <result column="unitsinstock" property="unitsinstock" jdbcType="VARCHAR" />
+    <result column="unitsonorder" property="unitsonorder" jdbcType="VARCHAR" />
+    <result column="reorderlevel" property="reorderlevel" jdbcType="VARCHAR" />
+    <result column="discontinued" property="discontinued" jdbcType="VARCHAR" />
+    <result column="productcode" property="productcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    productid, productname, description, unitprice, unitofmeasure, datecreated, dateupdated, 
+    supplierid, categoryid, quantityperunit, unitsinstock, unitsonorder, reorderlevel, 
+    discontinued, productcode
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.v5ent.rapid4j.web.model.ProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where productid = #{productid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_product
+    where productid = #{productid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.v5ent.rapid4j.web.model.ProductExample" >
+    delete from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.v5ent.rapid4j.web.model.Product" >
+    insert into t_product (productid, productname, description, 
+      unitprice, unitofmeasure, datecreated, 
+      dateupdated, supplierid, categoryid, 
+      quantityperunit, unitsinstock, unitsonorder, 
+      reorderlevel, discontinued, productcode
+      )
+    values (#{productid,jdbcType=VARCHAR}, #{productname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{unitprice,jdbcType=NUMERIC}, #{unitofmeasure,jdbcType=VARCHAR}, #{datecreated,jdbcType=DATE}, 
+      #{dateupdated,jdbcType=DATE}, #{supplierid,jdbcType=VARCHAR}, #{categoryid,jdbcType=VARCHAR}, 
+      #{quantityperunit,jdbcType=VARCHAR}, #{unitsinstock,jdbcType=VARCHAR}, #{unitsonorder,jdbcType=VARCHAR}, 
+      #{reorderlevel,jdbcType=VARCHAR}, #{discontinued,jdbcType=VARCHAR}, #{productcode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.v5ent.rapid4j.web.model.Product" >
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="productid != null" >
+        productid,
+      </if>
+      <if test="productname != null" >
+        productname,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="unitprice != null" >
+        unitprice,
+      </if>
+      <if test="unitofmeasure != null" >
+        unitofmeasure,
+      </if>
+      <if test="datecreated != null" >
+        datecreated,
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated,
+      </if>
+      <if test="supplierid != null" >
+        supplierid,
+      </if>
+      <if test="categoryid != null" >
+        categoryid,
+      </if>
+      <if test="quantityperunit != null" >
+        quantityperunit,
+      </if>
+      <if test="unitsinstock != null" >
+        unitsinstock,
+      </if>
+      <if test="unitsonorder != null" >
+        unitsonorder,
+      </if>
+      <if test="reorderlevel != null" >
+        reorderlevel,
+      </if>
+      <if test="discontinued != null" >
+        discontinued,
+      </if>
+      <if test="productcode != null" >
+        productcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="productid != null" >
+        #{productid,jdbcType=VARCHAR},
+      </if>
+      <if test="productname != null" >
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        #{unitprice,jdbcType=NUMERIC},
+      </if>
+      <if test="unitofmeasure != null" >
+        #{unitofmeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="datecreated != null" >
+        #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="dateupdated != null" >
+        #{dateupdated,jdbcType=DATE},
+      </if>
+      <if test="supplierid != null" >
+        #{supplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="quantityperunit != null" >
+        #{quantityperunit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsinstock != null" >
+        #{unitsinstock,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsonorder != null" >
+        #{unitsonorder,jdbcType=VARCHAR},
+      </if>
+      <if test="reorderlevel != null" >
+        #{reorderlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="discontinued != null" >
+        #{discontinued,jdbcType=VARCHAR},
+      </if>
+      <if test="productcode != null" >
+        #{productcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.v5ent.rapid4j.web.model.ProductExample" resultType="java.lang.Integer" >
+    select count(*) from t_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_product
+    <set >
+      <if test="record.productid != null" >
+        productid = #{record.productid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productname != null" >
+        productname = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitprice != null" >
+        unitprice = #{record.unitprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.unitofmeasure != null" >
+        unitofmeasure = #{record.unitofmeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datecreated != null" >
+        datecreated = #{record.datecreated,jdbcType=DATE},
+      </if>
+      <if test="record.dateupdated != null" >
+        dateupdated = #{record.dateupdated,jdbcType=DATE},
+      </if>
+      <if test="record.supplierid != null" >
+        supplierid = #{record.supplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryid != null" >
+        categoryid = #{record.categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantityperunit != null" >
+        quantityperunit = #{record.quantityperunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitsinstock != null" >
+        unitsinstock = #{record.unitsinstock,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitsonorder != null" >
+        unitsonorder = #{record.unitsonorder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reorderlevel != null" >
+        reorderlevel = #{record.reorderlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discontinued != null" >
+        discontinued = #{record.discontinued,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productcode != null" >
+        productcode = #{record.productcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_product
+    set productid = #{record.productid,jdbcType=VARCHAR},
+      productname = #{record.productname,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      unitprice = #{record.unitprice,jdbcType=NUMERIC},
+      unitofmeasure = #{record.unitofmeasure,jdbcType=VARCHAR},
+      datecreated = #{record.datecreated,jdbcType=DATE},
+      dateupdated = #{record.dateupdated,jdbcType=DATE},
+      supplierid = #{record.supplierid,jdbcType=VARCHAR},
+      categoryid = #{record.categoryid,jdbcType=VARCHAR},
+      quantityperunit = #{record.quantityperunit,jdbcType=VARCHAR},
+      unitsinstock = #{record.unitsinstock,jdbcType=VARCHAR},
+      unitsonorder = #{record.unitsonorder,jdbcType=VARCHAR},
+      reorderlevel = #{record.reorderlevel,jdbcType=VARCHAR},
+      discontinued = #{record.discontinued,jdbcType=VARCHAR},
+      productcode = #{record.productcode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.v5ent.rapid4j.web.model.Product" >
+    update t_product
+    <set >
+      <if test="productname != null" >
+        productname = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        unitprice = #{unitprice,jdbcType=NUMERIC},
+      </if>
+      <if test="unitofmeasure != null" >
+        unitofmeasure = #{unitofmeasure,jdbcType=VARCHAR},
+      </if>
+      <if test="datecreated != null" >
+        datecreated = #{datecreated,jdbcType=DATE},
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated = #{dateupdated,jdbcType=DATE},
+      </if>
+      <if test="supplierid != null" >
+        supplierid = #{supplierid,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryid != null" >
+        categoryid = #{categoryid,jdbcType=VARCHAR},
+      </if>
+      <if test="quantityperunit != null" >
+        quantityperunit = #{quantityperunit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsinstock != null" >
+        unitsinstock = #{unitsinstock,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsonorder != null" >
+        unitsonorder = #{unitsonorder,jdbcType=VARCHAR},
+      </if>
+      <if test="reorderlevel != null" >
+        reorderlevel = #{reorderlevel,jdbcType=VARCHAR},
+      </if>
+      <if test="discontinued != null" >
+        discontinued = #{discontinued,jdbcType=VARCHAR},
+      </if>
+      <if test="productcode != null" >
+        productcode = #{productcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where productid = #{productid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.v5ent.rapid4j.web.model.Product" >
+    update t_product
+    set productname = #{productname,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      unitprice = #{unitprice,jdbcType=NUMERIC},
+      unitofmeasure = #{unitofmeasure,jdbcType=VARCHAR},
+      datecreated = #{datecreated,jdbcType=DATE},
+      dateupdated = #{dateupdated,jdbcType=DATE},
+      supplierid = #{supplierid,jdbcType=VARCHAR},
+      categoryid = #{categoryid,jdbcType=VARCHAR},
+      quantityperunit = #{quantityperunit,jdbcType=VARCHAR},
+      unitsinstock = #{unitsinstock,jdbcType=VARCHAR},
+      unitsonorder = #{unitsonorder,jdbcType=VARCHAR},
+      reorderlevel = #{reorderlevel,jdbcType=VARCHAR},
+      discontinued = #{discontinued,jdbcType=VARCHAR},
+      productcode = #{productcode,jdbcType=VARCHAR}
+    where productid = #{productid,jdbcType=VARCHAR}
+  </update>
+</mapper>

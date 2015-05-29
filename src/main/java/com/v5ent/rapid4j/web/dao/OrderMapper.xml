@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.v5ent.rapid4j.web.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.v5ent.rapid4j.web.model.Order" >
+    <id column="orderid" property="orderid" jdbcType="VARCHAR" />
+    <result column="customerid" property="customerid" jdbcType="VARCHAR" />
+    <result column="orderdate" property="orderdate" jdbcType="DATE" />
+    <result column="requireddate" property="requireddate" jdbcType="DATE" />
+    <result column="shipvia" property="shipvia" jdbcType="VARCHAR" />
+    <result column="shipname" property="shipname" jdbcType="VARCHAR" />
+    <result column="shipaddress" property="shipaddress" jdbcType="VARCHAR" />
+    <result column="shipcity" property="shipcity" jdbcType="VARCHAR" />
+    <result column="shipregion" property="shipregion" jdbcType="VARCHAR" />
+    <result column="shippostalcode" property="shippostalcode" jdbcType="VARCHAR" />
+    <result column="shipcountry" property="shipcountry" jdbcType="VARCHAR" />
+    <result column="ordertotal" property="ordertotal" jdbcType="DOUBLE" />
+    <result column="dateupdated" property="dateupdated" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderid, customerid, orderdate, requireddate, shipvia, shipname, shipaddress, shipcity, 
+    shipregion, shippostalcode, shipcountry, ordertotal, dateupdated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.v5ent.rapid4j.web.model.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_order
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.v5ent.rapid4j.web.model.OrderExample" >
+    delete from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.v5ent.rapid4j.web.model.Order" >
+    insert into t_order (orderid, customerid, orderdate, 
+      requireddate, shipvia, shipname, 
+      shipaddress, shipcity, shipregion, 
+      shippostalcode, shipcountry, ordertotal, 
+      dateupdated)
+    values (#{orderid,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{orderdate,jdbcType=DATE}, 
+      #{requireddate,jdbcType=DATE}, #{shipvia,jdbcType=VARCHAR}, #{shipname,jdbcType=VARCHAR}, 
+      #{shipaddress,jdbcType=VARCHAR}, #{shipcity,jdbcType=VARCHAR}, #{shipregion,jdbcType=VARCHAR}, 
+      #{shippostalcode,jdbcType=VARCHAR}, #{shipcountry,jdbcType=VARCHAR}, #{ordertotal,jdbcType=DOUBLE}, 
+      #{dateupdated,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.v5ent.rapid4j.web.model.Order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="customerid != null" >
+        customerid,
+      </if>
+      <if test="orderdate != null" >
+        orderdate,
+      </if>
+      <if test="requireddate != null" >
+        requireddate,
+      </if>
+      <if test="shipvia != null" >
+        shipvia,
+      </if>
+      <if test="shipname != null" >
+        shipname,
+      </if>
+      <if test="shipaddress != null" >
+        shipaddress,
+      </if>
+      <if test="shipcity != null" >
+        shipcity,
+      </if>
+      <if test="shipregion != null" >
+        shipregion,
+      </if>
+      <if test="shippostalcode != null" >
+        shippostalcode,
+      </if>
+      <if test="shipcountry != null" >
+        shipcountry,
+      </if>
+      <if test="ordertotal != null" >
+        ordertotal,
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdate != null" >
+        #{orderdate,jdbcType=DATE},
+      </if>
+      <if test="requireddate != null" >
+        #{requireddate,jdbcType=DATE},
+      </if>
+      <if test="shipvia != null" >
+        #{shipvia,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shipaddress != null" >
+        #{shipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipcity != null" >
+        #{shipcity,jdbcType=VARCHAR},
+      </if>
+      <if test="shipregion != null" >
+        #{shipregion,jdbcType=VARCHAR},
+      </if>
+      <if test="shippostalcode != null" >
+        #{shippostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipcountry != null" >
+        #{shipcountry,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertotal != null" >
+        #{ordertotal,jdbcType=DOUBLE},
+      </if>
+      <if test="dateupdated != null" >
+        #{dateupdated,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.v5ent.rapid4j.web.model.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from t_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_order
+    <set >
+      <if test="record.orderid != null" >
+        orderid = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerid != null" >
+        customerid = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderdate != null" >
+        orderdate = #{record.orderdate,jdbcType=DATE},
+      </if>
+      <if test="record.requireddate != null" >
+        requireddate = #{record.requireddate,jdbcType=DATE},
+      </if>
+      <if test="record.shipvia != null" >
+        shipvia = #{record.shipvia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipname != null" >
+        shipname = #{record.shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipaddress != null" >
+        shipaddress = #{record.shipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipcity != null" >
+        shipcity = #{record.shipcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipregion != null" >
+        shipregion = #{record.shipregion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippostalcode != null" >
+        shippostalcode = #{record.shippostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipcountry != null" >
+        shipcountry = #{record.shipcountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ordertotal != null" >
+        ordertotal = #{record.ordertotal,jdbcType=DOUBLE},
+      </if>
+      <if test="record.dateupdated != null" >
+        dateupdated = #{record.dateupdated,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_order
+    set orderid = #{record.orderid,jdbcType=VARCHAR},
+      customerid = #{record.customerid,jdbcType=VARCHAR},
+      orderdate = #{record.orderdate,jdbcType=DATE},
+      requireddate = #{record.requireddate,jdbcType=DATE},
+      shipvia = #{record.shipvia,jdbcType=VARCHAR},
+      shipname = #{record.shipname,jdbcType=VARCHAR},
+      shipaddress = #{record.shipaddress,jdbcType=VARCHAR},
+      shipcity = #{record.shipcity,jdbcType=VARCHAR},
+      shipregion = #{record.shipregion,jdbcType=VARCHAR},
+      shippostalcode = #{record.shippostalcode,jdbcType=VARCHAR},
+      shipcountry = #{record.shipcountry,jdbcType=VARCHAR},
+      ordertotal = #{record.ordertotal,jdbcType=DOUBLE},
+      dateupdated = #{record.dateupdated,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.v5ent.rapid4j.web.model.Order" >
+    update t_order
+    <set >
+      <if test="customerid != null" >
+        customerid = #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdate != null" >
+        orderdate = #{orderdate,jdbcType=DATE},
+      </if>
+      <if test="requireddate != null" >
+        requireddate = #{requireddate,jdbcType=DATE},
+      </if>
+      <if test="shipvia != null" >
+        shipvia = #{shipvia,jdbcType=VARCHAR},
+      </if>
+      <if test="shipname != null" >
+        shipname = #{shipname,jdbcType=VARCHAR},
+      </if>
+      <if test="shipaddress != null" >
+        shipaddress = #{shipaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shipcity != null" >
+        shipcity = #{shipcity,jdbcType=VARCHAR},
+      </if>
+      <if test="shipregion != null" >
+        shipregion = #{shipregion,jdbcType=VARCHAR},
+      </if>
+      <if test="shippostalcode != null" >
+        shippostalcode = #{shippostalcode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipcountry != null" >
+        shipcountry = #{shipcountry,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertotal != null" >
+        ordertotal = #{ordertotal,jdbcType=DOUBLE},
+      </if>
+      <if test="dateupdated != null" >
+        dateupdated = #{dateupdated,jdbcType=DATE},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.v5ent.rapid4j.web.model.Order" >
+    update t_order
+    set customerid = #{customerid,jdbcType=VARCHAR},
+      orderdate = #{orderdate,jdbcType=DATE},
+      requireddate = #{requireddate,jdbcType=DATE},
+      shipvia = #{shipvia,jdbcType=VARCHAR},
+      shipname = #{shipname,jdbcType=VARCHAR},
+      shipaddress = #{shipaddress,jdbcType=VARCHAR},
+      shipcity = #{shipcity,jdbcType=VARCHAR},
+      shipregion = #{shipregion,jdbcType=VARCHAR},
+      shippostalcode = #{shippostalcode,jdbcType=VARCHAR},
+      shipcountry = #{shipcountry,jdbcType=VARCHAR},
+      ordertotal = #{ordertotal,jdbcType=DOUBLE},
+      dateupdated = #{dateupdated,jdbcType=DATE}
+    where orderid = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

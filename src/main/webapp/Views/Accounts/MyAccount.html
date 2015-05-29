@@ -1,0 +1,52 @@
+﻿
+<div style="width:100%;" ng-controller="myAccountController" ng-init="initializeController()" ng-cloak>
+
+    <h3> My Acccount </h3>
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label" align="right"><label class="required">First Name:</label></td>
+            <td class="input-box">
+                <input ng-model="FirstName" type="text" style="width: 300px" ng-class="{'validation-error': FirstNameInputError}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">Last Name:</label></td>
+            <td class="input-box">
+                <input ng-model="LastName" type="text" style="width: 300px" ng-class="{'validation-error': LastNameInputError}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">User Name:</label></td>
+            <td class="input-box">
+                <input ng-model="UserName" required="true" type="text" style="width: 300px" ng-class="{'validation-error': UserNameInputError}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">Email Address:</label></td>
+            <td class="input-box">
+                <input ng-model="EmailAddress" type="email" style="width: 300px" ng-class="{'validation-error': EmailAddressInputError}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">Password:</label></td>
+            <td class="input-box">
+                <input ng-model="Password" type="password" style="width: 300px" ng-class="{'validation-error': PasswordInputError}" />
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label-bottom" align="right"><label class="required">Password Confirmation:</label></td>
+            <td class="input-box-bottom">
+                <input ng-model="PasswordConfirmation" type="password" style="width: 300px" ng-class="{'validation-error': PasswordConfirmationInputError}" />
+            </td>
+        </tr>
+    </table>
+
+    <button class="btn btn-primary btn-large" ng-click="updateUser()">Update Account Information</button>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+    </>
+</div>

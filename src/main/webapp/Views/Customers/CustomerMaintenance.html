@@ -1,0 +1,83 @@
+﻿
+<div ng-controller="customerMaintenanceController" ng-init="initializeController()">
+
+    <h3> Customer Maintenance </h3>
+
+    <table class="table" style="width:100%">
+        <tr>
+            <td class="input-label" align="right"><label class="required">Customer Code:</label></td>
+            <td class="input-box">
+                <div ng-bind="CustomerCode" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="CustomerCode" type="text" style="width: 300px" ng-class="{'validation-error': CustomerCodeInputError}" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label class="required">Company Name:</label></td>
+            <td class="input-box">
+                <div ng-bind="CompanyName" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="CompanyName" type="text" style="width: 300px" ng-class="{'validation-error': CompanyNameInputError}" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Address:</label></td>
+            <td class="input-box">
+                <div ng-bind="Address" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="Address"  type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>City:</label></td>
+            <td class="input-box">
+                <div ng-bind="City" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="City" type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Region:</label></td>
+            <td class="input-box">
+                <div ng-bind="Region" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="Region" type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Postal Code:</label></td>
+            <td class="input-box">
+                <div ng-bind="PostalCode" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="PostalCode" type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Country:</label></td>
+            <td class="input-box">
+                <div ng-bind="CountryCode" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="CountryCode" type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label" align="right"><label>Phone Number:</label></td>
+            <td class="input-box">
+                <div ng-bind="PhoneNumber" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="PhoneNumber" type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="input-label-bottom" align="right"><label>Web Site URL:</label></td>
+            <td class="input-box-bottom">
+                <div ng-bind="WebSiteURL" ng-show="DisplayMode"></div>
+                <div ng-show="EditMode"><input ng-model="WebSiteURL"  type="text" style="width: 300px" /></div>
+            </td>
+        </tr>
+    </table>
+
+    <span ng-show="ShowCreateButton"><button class="btn btn-primary btn-large" ng-click="createCustomer()">Create</button></span>
+    <span ng-show="ShowEditButton"><button class="btn btn-primary btn-large" ng-click="editCustomer()">Edit</button></span>
+    <span ng-show="ShowUpdateButton"><button class="btn btn-primary btn-large" ng-click="updateCustomer()">Update</button></span>
+    <span ng-show="ShowCancelButton"><button class="btn btn-primary btn-large" ng-click="cancelChanges()">Cancel</button></span>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,210 @@
+﻿
+<div ng-controller="orderEntryDetailsController" ng-init="initializeController()" >
+
+    <h3> Order Entry Details </h3>
+
+    <table style="width:100%">
+        <tr>
+
+            <td style="width: 49%; vertical-align: top">
+
+                <table class="table" style="width:100%">
+
+                    <tr>
+                        <td class="input-label" align="right" ><label>Order Number:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="OrderID"></div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td class="input-label" align="right"><label>Order Date:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div>{{OrderDate | date:'MM/dd/yyyy'}}</div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="input-label" align="right" style="width:200px"><label>Required Ship Date:</label></td>
+                        <td class="input-box" style="width:70%">
+                            <div ng-bind="RequiredDate"></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+
+                        <td class="input-label-bottom" align="right"><label>Ship Via:</label></td>
+                        <td class="input-box-bottom" style="width:70%">
+                            <div>{{selectedShipperName}}</div>
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </td>
+
+            <td style="width:2%">
+                &nbsp;
+            </td>
+
+            <td style="width:49%; vertical-align:top">
+
+                <table class="table" style="width:100%">
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Customer Code:</label></td>
+                        <td class="input-box" style="width:50%">
+                            <div ng-bind="CustomerCode"></div>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Customer Name:</label></td>
+                        <td class="input-box" style="width:50%">
+                            <div ng-bind="CompanyName"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="input-label" align="right"><label>Ship To Name:</label></td>
+                        <td class="input-box" style="width:50%">
+                            <div ng-bind="ShipName"></div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="input-label-bottom" align="right"><label>Order Total:</label></td>
+                        <td class="input-box-bottom">
+                            <div>{{OrderTotal | currency}}</div>
+                        </td>
+                    </tr>
+
+
+                </table>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+    <table class="table" style="width:100%">
+
+        <tr>
+            <td class="input-label-bottom" style="width:10%"><label>Line Item #</label></td>
+            <td class="input-label-bottom" style="width:20%"><label>Product Code</label></td>
+            <td class="input-label-bottom" style="width:30%"><label>Description</label></td>
+            <td class="input-label-bottom" style="width:10%"><label>Quantity</label></td>
+            <td class="input-label-bottom" style="width:10%"><label>Unit Price</label></td>
+            <td class="input-label-bottom" style="width:10%"><label>Extended Price</label></td>
+            <td class="input-label-bottom" style="width:10%" "><label>Options</label></td>
+        </tr>
+
+        <tr>
+            <td class="input-box-bottom2" style="width:10%">
+                <div>{{LineItemNumber}}</div>
+            </td>
+            <td class="input-box-bottom" style="width:20%">
+                <div>
+                    <input ng-model="ProductCode" type="text" readonly />
+                    <img src="../../img/Search.gif" style="width:18px; height:18px" ng-click="openModal()" />
+                </div>
+            </td>
+            <td class="input-box-bottom" style="width:30%">
+                <div>{{Description}}</div>
+            </td>
+            <td class="input-box-bottom" style="width:10%">
+                <div><input ng-model="Quantity" type="text" /></div>
+            </td>
+            <td class="input-box-bottom" style="width:10%">
+                <div>{{UnitPrice| currency}}</div>
+            </td>
+            <td class="input-box-bottom" style="width:10%">
+                <div>{{UnitPrice * Quantity | currency}}</div>
+            </td>
+            <td class="input-box-bottom" style="width:10%">
+                <div><button class="btn btn-primary btn-small" ng-click="addLineItem()">Save</button></div>
+            </td>
+        </tr>
+
+
+        <tr ng-repeat="order in OrderDetails">
+            <td class="input-box-bottom2" style="width: 10%; white-space: nowrap;"><div>{{order.LineItemNumber | leadingZeroes}}</div></td>
+            <td class="input-box-bottom" style="width: 20%; white-space: nowrap"><div ng-bind="order.ProductCode"></div></td>
+            <td class="input-box-bottom" style="width: 30%; white-space: nowrap"><div ng-bind="order.Description"></div></td>
+            <td class="input-box-bottom" style="width: 10%; white-space: nowrap">
+                <div ng-show="order.DisplayMode" ng-bind="order.Quantity"></div>
+                <div><input ng-show="order.EditMode" ng-model="order.Quantity" type="text" /></div>
+            </td>
+            <td class="input-box-bottom" style="width: 10%; white-space: nowrap"><div>{{order.UnitPrice | currency}}</div></td>
+            <td class="input-box-bottom" style="width: 10%; white-space: nowrap"><div>{{order.UnitPrice * order.Quantity | currency}}</div></td>
+            <td class="input-box-bottom" style="width: 10%; white-space: nowrap">
+                <div>
+                    <button class="btn btn-primary btn-small" ng-show="order.DisplayMode" ng-click="editLineItem($index)">Edit</button>
+                    <button class="btn btn-primary btn-small" ng-show="order.DisplayMode" ng-click="deleteLineItem($index)">Delete</button>
+                    <button class="btn btn-primary btn-small" ng-show="order.EditMode" ng-click="updateLineItem($index)">Save</button>
+                    <button class="btn btn-primary btn-small" ng-show="order.EditMode" ng-click="cancelEdit($index)">Cancel</button>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+
+    <button class="btn btn-primary btn-large" ng-click="orderHeader()">Order Header</button>
+
+    <div ng-include="'/Views/Shared/ProductLookupModal.html'"></div>
+
+    <div style="padding-top:20px">
+        <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+    </div>
+
+    <script type="text/ng-template" id="deleteLineItemModal.html" ng-controller="orderEntryDetailsController">
+
+        <div>
+
+            <div class="modal-header">
+                <h3 class="modal-title">Delete Line Item</h3>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <td>
+                            Line Item
+                        </td>
+                        <td>
+                            Product Code
+                        </td>
+                        <td>
+                            Description
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>{{thisLineItemToDelete | leadingZeroes }}</div>
+                        </td>
+                        <td>
+                            <div>{{thisProductCodeToDelete}}</div>
+                        </td>
+                        <td>
+                            <div>{{thisDescriptionToDelete}}</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="okToDelete()">OK</button>
+                <button class="btn btn-warning" ng-click="cancelDelete()">Cancel</button>
+            </div>
+
+        </div>
+
+    </script>
+
+
+</div>

@@ -1,0 +1,126 @@
+﻿
+
+
+.validation-error {
+    color: Maroon;
+    font-weight: bold;   
+    background-color: #ffeeee;
+    border-bottom-color:red;   
+    border-top-color:red;   
+    border-left-color:red;   
+    border-right-color:red;   
+}
+
+.required:before { 
+    
+    content:"* "; 
+    color:red; 
+    font: bold;
+   
+    /* background-image: url('/Img/required.png');
+	    background-repeat: no-repeat;
+	    background-position: 50% 50%; */
+
+}
+
+.input-label, .input-label-bottom {
+
+  text-shadow: 0 1px 0 #fff;
+  border-color: whitesmoke;
+  border-width: medium;  
+  background-color:  whitesmoke;
+
+  border-right-color: silver;  
+  border-right-style: solid;
+  border-right-width: 1px;
+
+  border-left-color: silver;  
+  border-left-style: solid;
+  border-left-width: 1px;
+
+  border-bottom-color: whitesmoke;  
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+
+  border-top-color: red;  
+  border-top-style: solid;
+  border-top-width: 2px;
+
+  min-width: 150px;
+  
+}
+
+.app-modal-window .modal-dialog {
+  width: 900px;
+}
+
+.input-label-bottom {
+
+  border-bottom-color: silver;  
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}
+
+
+.input-box-bottom2, input-box-bottom {
+    border-left-color: silver;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: silver;  
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: silver;  
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+
+.input-box, .input-box-bottom {
+
+  text-shadow: 0 1px 0 #fff;
+  border-color: red;
+  border-width: medium;  
+  background-color: white;
+  padding: 0px;
+
+  border-right-color: silver;  
+  border-right-style: solid;
+  border-right-width: 1px;
+
+  border-bottom-color: white;  
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+
+  width:85%;
+
+}
+
+
+
+.input-box-double-sided, .input-box-bottom-double-sided {
+
+  text-shadow: 0 1px 0 #fff;
+  border-color: red;
+  border-width: medium;  
+  background-color: white;
+  padding: 0px;
+
+  border-right-color: silver;  
+  border-right-style: solid;
+  border-right-width: 1px;
+
+  border-bottom-color: white;  
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+
+  width:40%;
+
+
+}
+
+
+.input-box-bottom {
+
+  border-bottom-color: silver;  
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+}

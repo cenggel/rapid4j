@@ -1,0 +1,28 @@
+﻿
+
+<div>
+
+    <div style="width:100%;" ng-controller="importProductsController" ng-init="initializeController()" ng-cloak>
+
+        <h3> Import Products </h3>
+
+        <table class="table">
+            <tr>
+                <td class="input-label-bottom"><label>This function will import product test data for demonstration purposes.</label></td>
+            </tr>
+        </table>
+
+        <button class="btn btn-primary btn-large" ng-click="importProducts()">Import</button>
+
+        <div style="padding-top:20px">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><div ng-bind-html="MessageBox"></div></alert>
+        </div>
+
+        </>
+    </div>
+
+
+
+</div>
+
+
