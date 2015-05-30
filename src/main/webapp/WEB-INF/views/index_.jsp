@@ -16,7 +16,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <head>
         <base href="<%=basePath%>">
         <meta charset="utf-8" />
-        <title>rapid4j</title>
+        <title>Rapid4J</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="" name="description" />
@@ -302,7 +302,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         <!-- BEGIN FOOTER -->
         <div class="footer">
             <div class="footer-inner">
-                2014 &copy; rapid4j By v5ent.
+                2015 &copy; Rapid4J By v5ent.
             </div>
             <div class="footer-tools">
                 <span class="go-top"><i class="fa fa-angle-up"></i></span>
