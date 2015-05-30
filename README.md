@@ -2,8 +2,8 @@
 
 ------
 
-**rapid4j** is a seed project for building Modern Application
-http://syntx.io/adding-http-basic-auth-to-restful-services-in-java-and-spring/
+**rapid4j** is a rapid seed project for building java-backend Modern Application
+
 ------
 
 ## How to get/use it
