@@ -6,9 +6,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,26 +51,32 @@ public class UserController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@Validated User user, BindingResult result, Model model, HttpServletRequest request) {
+    	AuthenticationToken token =new UsernamePasswordToken(user.getUsername(), user.getPassword());
+    	Subject currentUser = SecurityUtils.getSubject();
+		// 已登陆 则跳到首页
+		if (currentUser.isAuthenticated()) {
+			return "redirect:/";
+		}
+		if (result.hasErrors()) {
+			model.addAttribute("error", "参数错误！");
+			return "login";
+		}
         try {
-            Subject subject = SecurityUtils.getSubject();
-            // 已登陆则 跳到首页
-            if (subject.isAuthenticated()) {
-                return "redirect:/";
-            }
-            if (result.hasErrors()) {
-                model.addAttribute("error", "参数错误！");
-                return "login";
-            }
             // 身份验证
-            subject.login(new UsernamePasswordToken(user.getUsername(), user.getPassword()));
-            // 验证成功在Session中保存用户信息
-            final User authUserInfo = userService.selectByUsername(user.getUsername());
-            request.getSession().setAttribute("userInfo", authUserInfo);
-        } catch (AuthenticationException e) {
+            currentUser.login(token);
+        }  catch ( UnknownAccountException uae ) {
+        } catch ( IncorrectCredentialsException ice ) { 
+        } catch ( LockedAccountException lae ) { 
+        } catch ( ExcessiveAttemptsException eae ) { 
+        }catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("error", "用户名或密码错误 ！");
             return "login";
         }
+        // 验证成功在Session中保存用户信息
+        final User authUserInfo = userService.selectByUsername(user.getUsername());
+        Session session = currentUser.getSession(true);
+        session.setAttribute("userInfo", authUserInfo);
         return "redirect:/";
     }
 
@@ -75,11 +87,12 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
+    public String logout() {
+    	Subject currentUser = SecurityUtils.getSubject();
+    	Session session = currentUser.getSession();
         session.removeAttribute("userInfo");
         // 登出操作
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
+        currentUser.logout();
         return "login";
     }
 
