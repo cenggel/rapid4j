@@ -43,6 +43,7 @@
         <jackson.version>1.9.13</jackson.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <druid.version>1.0.5</druid.version>
+        <dubbo.version>2.5.3</dubbo.version>
         <tomcat.jdbc.version>7.0.53</tomcat.jdbc.version>
         <jstl.version>1.2</jstl.version>
         <google.collections.version>1.0</google.collections.version>
@@ -152,6 +153,12 @@
             <artifactId>druid</artifactId>
             <version>${druid.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>${dubbo.version}</version>
+		</dependency>
 
         <!-- jackson -->
         <!-- <dependency>
